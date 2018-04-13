@@ -33,15 +33,16 @@ def download_xkcd(start_comic, end_comic):
                 res.raise_for_status()
 
                 # Save the image to d:\\xkcd
-                with open(os.path.join('d:\\xkcd', os.path.basename(comic_url)), 'wb') as image_file:
+                with open(os.path.join('d:\\xkcd', \
+                        os.path.basename(comic_url)), 'wb') as image_file:
                     for chunk in res.iter_content(100000):
                         image_file.write(chunk)
         except Exception:
             print('Error: ', sys.exc_info()[0], ' - ', sys.exc_info()[1])
 
 # Create and start the Thread objects.
-download_threads = []                       # A list of all the Thread objects
-for i in range(0, 1400, 100):               # Loops 14 times, creates 14 threads...
+download_threads = []                   # A list of all the Thread objects
+for i in range(0, 1400, 100):           # Loops 14 times, creates 14 threads...
     download_thread = threading.Thread(target=download_xkcd, args=(i, i+99))
     download_threads.append(download_thread)
     download_thread.start()
